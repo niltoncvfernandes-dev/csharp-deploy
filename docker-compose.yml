@@ -1,0 +1,16 @@
+services:
+  corewebapi:
+    container_name: corewebapi
+
+    build:
+      context: .
+      dockerfile:  CoreWebApi/Dockerfile
+
+    ports:
+      - "5000:8080"
+
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: 8080
+
+    restart: unless-stopped
