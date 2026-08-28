@@ -29,5 +29,18 @@ namespace CoreWebApi.Controllers
             })
             .ToArray();
         }
+
+        [HttpGet("today")]
+        public IActionResult Today()
+        {
+            var weather = new WeatherForecast
+            {
+                Date = DateOnly.FromDateTime(DateTime.Now),
+                TemperatureC = Random.Shared.Next(-20, 55),
+                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+            };
+
+            return Ok(weather);
+        }
     }
 }
