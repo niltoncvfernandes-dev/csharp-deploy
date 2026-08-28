@@ -12,10 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.0.x     
-
       - name: Login Docker Hub
         uses: docker/login-action@v3
         with:
@@ -26,10 +22,11 @@ jobs:
         run: |
           docker build \
             -f CoreWebApi/Dockerfile \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/corewebapi:${{ github.sha }} \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/corewebapi:latest \
             .
 
       - name: Push Image
         run: |
-          docker push \
-            ${{ secrets.DOCKERHUB_USERNAME }}/corewebapi:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/corewebapi:${{ github.sha }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/corewebapi:latest
