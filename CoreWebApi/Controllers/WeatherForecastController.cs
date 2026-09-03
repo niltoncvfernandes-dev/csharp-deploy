@@ -18,6 +18,18 @@ namespace CoreWebApi.Controllers
             _logger = logger;
         }
 
+        [HttpGet("info")]
+        public IActionResult GetInfo() {             
+            var info = new
+            {
+                ApplicationName = "CoreWebApi",
+                Version = "1.0.0",
+                HostName = Environment.GetEnvironmentVariable("HOSTNAME") ?? "LOCAL",
+                Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
+            };
+            return Ok(info);
+        }
+
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
